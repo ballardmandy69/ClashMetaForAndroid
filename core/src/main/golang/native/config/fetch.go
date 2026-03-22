@@ -25,8 +25,17 @@ type Status struct {
 }
 
 func openUrl(ctx context.Context, url string) (io.ReadCloser, error) {
-	response, err := clashHttp.HttpRequest(ctx, url, http.MethodGet, http.Header{"User-Agent": {"ClashMetaForAndroid/" + app.VersionName()} + "yeshaAndroid"}, nil)
+	ua := "ClashMetaForAndroid/" + app.VersionName() + " yeshaAndroid"
 
+	response, err := clashHttp.HttpRequest(
+		ctx,
+		url,
+		http.MethodGet,
+		http.Header{
+			"User-Agent": []string{ua},
+		},
+		nil,
+	)
 	if err != nil {
 		return nil, err
 	}
